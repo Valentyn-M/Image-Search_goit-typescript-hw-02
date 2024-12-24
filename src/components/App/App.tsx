@@ -1,31 +1,33 @@
 import { useEffect, useState } from 'react'
 import './App.css'
-import ImageGallery from './ImageGallery/ImageGallery'
-import SearchBar from './SearchBar/SearchBar'
-import { fetchImages } from '../services/api'
-import Loader from './Loader/Loader'
-import ErrorMessage from './ErrorMessage/ErrorMessage'
-import LoadMoreBtn from './LoadMoreBtn/LoadMoreBtn'
-import ImageModal from './ImageModal/ImageModal'
+import ImageGallery from '.././ImageGallery/ImageGallery'
+import SearchBar from '.././SearchBar/SearchBar'
+import { fetchImages } from '../../services/api'
+import Loader from '.././Loader/Loader'
+import ErrorMessage from '.././ErrorMessage/ErrorMessage'
+import LoadMoreBtn from '.././LoadMoreBtn/LoadMoreBtn'
+import ImageModal from '.././ImageModal/ImageModal'
+import { Image } from './App.types'
+import Footer from '../Footer/Footer'
 
-function App() {
+const App: React.FC = () => {
 
 	// Стан для зберігання зображень
-	const [images, setImages] = useState([]);
+	const [images, setImages] = useState<Image[]>([]);
 	// Стан для індикатора завантаження
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState<boolean>(false);
 	// Стан для зберігання помилки
-	const [isError, setIsError] = useState(false);
+	const [isError, setIsError] = useState<boolean>(false);
 	// Стан для зберігання пошукового запиту
-	const [query, setQuery] = useState('');
+	const [query, setQuery] = useState<string>('');
 	// Стан для зберігання поточної сторінки галереї
-	const [page, setPage] = useState(1);
+	const [page, setPage] = useState<number>(1);
 	// Стан для зберігання загальної кількості сторінок, що повертає бекенд
-	const [totalPages, setTotalPages] = useState(0);
+	const [totalPages, setTotalPages] = useState<number>(0);
 	// Стан для зберігання стану модального вiкна
-	const [isModal, setIsModal] = useState(false);
+	const [isModal, setIsModal] = useState<boolean>(false);
 	// Стан для зберігання зображення, по якому зроблено клiк
-	const [selectedImage, setSelectedImage] = useState(null);
+	const [selectedImage, setSelectedImage] = useState<null | Image>(null);
 
 	// Еффект для HTTP-запитів на бекенд (useEffect спрацювує тільки після того, як відрендериться HTML-розмітка (DOM), на відміну від useState)
 	useEffect(() => {
@@ -45,8 +47,14 @@ function App() {
 				setTotalPages(total_pages);
 			} catch (error) {
 				// Якщо отримуємо помилку
-				setIsError(true);
-				console.error(error.message);
+				// Перевіряємо, чи є error екземпляром класу Error
+				if (error instanceof Error) {
+					setIsError(true);
+					console.error(error.message); // Тепер TypeScript впевнений, що error має властивість message
+					// console.error((error as Error).message); // Альтернативний варіант, якщо ми точно знаємо, що всі помилки, що викидаються, будуть екземплярами Error
+				} else {
+					console.error('Unknown error occurred'); // На випадок, якщо error не є екземпляром Error
+				}
 			} finally {
 				// Прибираємо Loader
 				setLoading(false);
@@ -58,7 +66,7 @@ function App() {
 	}, [query, page]);
 
 	// Функція для зміни стану пошукового запиту (при її запуску в компоненті SearchBar дані потрапляють у стан query)
-	const changeQuery = (searchQuery) => {
+	const changeQuery = (searchQuery: string): void => {
 		// Обнуляємо стан images
 		setImages([]);
 		// Змінюємо стан query
@@ -73,7 +81,7 @@ function App() {
 	}
 
 	// Функція для активації модального вікна
-	const activateModal = (image) => {
+	const activateModal = (image: Image): void => {
 		// Перевіряємо, чи вже відкрито модальне вікно
 		if (!isModal) {
 			// Зберігаємо в стан обране зображення
@@ -84,24 +92,29 @@ function App() {
 	}
 
 	// Функція для деактивації модального вікна
-	const closeModal = () => {
+	const closeModal = (): void => {
 		setIsModal(false);
 		setSelectedImage(null);
 	};
 
 	return (
 		<>
-			<SearchBar onChangeQuery={changeQuery} />
+			<header className="header">
+				<SearchBar changeQuery={changeQuery} />
+			</header>
 			{/* Відображаємо галерею зображень у випадку, якщо у масиві images є хоча б один елемент */}
-			<main className='main'>
+			<main className="main">
 				{images.length > 0 && <ImageGallery images={images} activateModal={activateModal} />}
 				{loading && <Loader />}
 				{isError && <ErrorMessage />}
 				{/* Показуємо кнопку якщо завантаження завершено i загальна кількість сторінок більше ніж поточна торінка */}
-				{!loading && totalPages > page && <LoadMoreBtn onChangePage={changePage} />}
+				{!loading && totalPages > page && <LoadMoreBtn changePage={changePage} />}
 			</main>
-			{/* Показуємо модальне вiкно за умови isModal = true та selectedImage визначено */}
-			{isModal && selectedImage && <ImageModal isActive={isModal} image={selectedImage} onClose={closeModal} />}
+			{/* Показуємо модальне вiкно за умови що selectedImage визначено */}
+			{selectedImage && <ImageModal isActive={isModal} image={selectedImage} onClose={closeModal} />}
+			<footer className="footer">
+				<Footer />
+			</footer>
 		</>
 	)
 }

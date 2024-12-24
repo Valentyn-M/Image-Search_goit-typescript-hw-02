@@ -1,19 +1,10 @@
-.header {
-	background-color: #3700b3;
-	padding: 15px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-}
-
 .form {
 	display: flex;
 	align-items: center;
 	flex-direction: row-reverse;
 	flex-basis: 500px;
 	background-color: #fff;
-	border-radius: 3px;
+	border-radius: 5px;
 	overflow: hidden;
 	transition: box-shadow 0.2s ease 0s;
 
@@ -38,6 +29,8 @@
 		height: 18px;
 		color: gray;
 		transition: color 0.3s ease 0s;
+		position: relative;
+		top: 1px;
 
 		.btn:focus &,
 		.btn:hover & {

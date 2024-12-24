@@ -2,41 +2,49 @@ import { Field, Form, Formik } from "formik"
 import s from "./SearchBar.module.css"
 import { CgSearch } from "react-icons/cg"
 import toast, { Toaster } from "react-hot-toast";
-import { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 
-const SearchBar = ({ onChangeQuery }) => {
+interface SearchBarProps {
+	changeQuery: (searchQuery: string) => void;
+}
 
-	const initialValues = {
+const SearchBar: React.FC<SearchBarProps> = ({ changeQuery }) => {
+
+	interface InitialValues {
+		query: string;
+	}
+
+	const initialValues: InitialValues = {
 		query: "",
 	}
 
-	const formRef = useRef();
+	const formRef = useRef<HTMLFormElement>(null);
 	// Стан для активації класу
-	const [isActive, setIsActive] = useState(false);
+	const [isActive, setIsActive] = useState<boolean>(false);
 
-	const handleSubmit = (values) => {
+	const handleSubmit = (values: InitialValues): void => {
 		// Якщо текстове поле порожнє
-		if (values.query === "") {
+		if (values.query.trim() === "") {
 			// Бібліотека React Hot Toast
 			toast.error("You must enter text to search for images")
 			return;
 		}
 
-		onChangeQuery(values.query);
+		changeQuery(values.query);
 	}
 
 	// Активацiя форми
-	const handleFocus = () => {
+	const handleFocus = (): void => {
 		setIsActive(true);
 	};
 
-	const handleBlur = () => {
+	const handleBlur = (): void => {
 		setIsActive(false);
 	};
 
 	return (
-		<header className={s.header}>
-			<Formik initialValues={initialValues} onSubmit={handleSubmit}>
+		<>
+			<Formik<InitialValues> initialValues={initialValues} onSubmit={handleSubmit}>
 				<Form className={`${s.form} ${isActive ? s.isActive : ""}`} ref={formRef}>
 					<Field className={s.input}
 						name="query"
@@ -52,7 +60,7 @@ const SearchBar = ({ onChangeQuery }) => {
 				</Form>
 			</Formik>
 			<Toaster position="top-right" />
-		</header>
+		</>
 	)
 }
 

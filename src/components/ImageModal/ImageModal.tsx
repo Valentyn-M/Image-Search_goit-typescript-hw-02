@@ -2,10 +2,12 @@ import Modal from 'react-modal';
 import s from './ImageModal.module.css';
 import { IoClose } from 'react-icons/io5';
 import { AiFillLike } from 'react-icons/ai';
+import { Image } from '../App/App.types';
+import React from 'react';
 
 const customStyles = {
 	overlay: {
-		backgroundColor: 'rgba(0, 0, 0, 0.75)',
+		backgroundColor: 'rgba(0, 0, 0, 0.8)',
 	},
 	content: {
 		padding: 0,
@@ -21,12 +23,16 @@ const customStyles = {
 		display: 'flex',
 		alignItems: 'center',
 		justifyContent: 'center',
-		minWidth: '290px',
-		minHeight: '174px',
 	},
 };
 
-const ImageModal = ({ isActive, onClose, image }) => {
+interface ImageModalProps {
+	isActive: boolean;
+	onClose: () => void;
+	image: Image;
+}
+
+const ImageModal: React.FC<ImageModalProps> = ({ isActive, onClose, image }) => {
 	return (
 		<Modal
 			isOpen={isActive}
@@ -34,6 +40,7 @@ const ImageModal = ({ isActive, onClose, image }) => {
 			shouldCloseOnOverlayClick={true}
 			shouldCloseOnEsc={true}
 			style={customStyles}
+			onAfterClose={() => { document.body.classList.remove('ReactModal__Body--open') }} // Через суворий режим цей клас чомусь не видаляється
 		>
 			<img
 				className={s.imageStyle}
@@ -43,7 +50,7 @@ const ImageModal = ({ isActive, onClose, image }) => {
 			<div className={s.desc}>{image.description ?? image.alt_description}</div>
 			<div className={s.likes}>
 				<AiFillLike className={s.likesIcon} />
-				<span className={s.infoValue}>{image.likes}</span>
+				<span className={s.infoValue}>{image.likes ?? 0}</span>
 			</div>
 			<button className={s.close} onClick={onClose}><IoClose className={s.closeIcon} /></button>
 		</Modal>

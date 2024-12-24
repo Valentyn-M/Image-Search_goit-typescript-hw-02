@@ -1,6 +1,7 @@
+import React from "react"
 import s from "./ErrorMessage.module.css"
 
-const ErrorMessage = () => {
+const ErrorMessage: React.FC = () => {
 	return (
 		<div className={s.errorWrap}>
 			<p className={s.error}>Something went wrong. Please reload the page and try again.</p>
