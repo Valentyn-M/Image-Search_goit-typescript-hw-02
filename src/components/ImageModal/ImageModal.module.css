@@ -1,0 +1,105 @@
+/* Стилi для overlay */
+/* .overlayStyle {
+	background-color: rgba(0, 0, 0, 0.75);
+} */
+
+/* Стилi для content */
+/* .contentStyle {
+	padding: 0;
+	border: 2px solid #fff;
+	top: 50%;
+	left: 50%;
+	right: auto;
+	bottom: auto;
+	margin-right: -50%;
+	transform: translate(-50%, -50%);
+	max-width: 90%;
+	max-height: 90%;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+} 
+Працюють не корректно	
+*/
+
+.imageStyle {
+	max-width: 90vw;
+	max-height: 90vh;
+	object-fit: contain;
+}
+
+.desc {
+	position: absolute;
+	bottom: 15px;
+	left: 15px;
+	right: 15px;
+	max-width: fit-content;
+	background-color: #fff;
+	padding: 6px 8px;
+	border-radius: 4px;
+	opacity: 0.5;
+	line-height: 1.3;
+	transition: opacity 0.3s ease 0s;
+
+	&:hover {
+		opacity: 1;
+	}
+}
+
+.likes {
+	position: absolute;
+	top: 15px;
+	left: 15px;
+	background-color: #fff;
+	padding: 6px 8px;
+	border-radius: 4px;
+	opacity: 0.5;
+	transition: opacity 0.3s ease 0s;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 5px;
+
+	.likesIcon {
+		transition: color 0.3s ease 0s;
+		font-size: 18px;
+	}
+
+	&:hover {
+		opacity: 1;
+
+		.likesIcon {
+			color: #3700b3;
+		}
+	}
+}
+
+.close {
+	position: absolute;
+	top: 15px;
+	right: 15px;
+	background-color: #fff;
+	border-radius: 4px;
+	padding: 3px;
+	opacity: 0.5;
+	transition: opacity 0.3s ease 0s;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	.closeIcon {
+		font-size: 24px;
+		transition: color 0.3s ease 0s;
+	}
+
+	&:hover,
+	:focus {
+		opacity: 1;
+
+		.closeIcon {
+			color: #ff0266;
+		}
+	}
+}

@@ -1,0 +1,9 @@
+.errorWrap {
+	background-color: #F44336;
+	padding: 15px;
+	border-radius: 10px;
+}
+
+.error {
+	color: #fff;
+}

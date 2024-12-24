@@ -1,0 +1,17 @@
+.btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 40px;
+	width: 200px;
+	background-color: #3700b3;
+	color: #fff;
+	border-radius: 3px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
+	transition: background-color 0.3s ease 0s;
+
+	&:hover,
+	&:focus {
+		background-color: #ff0266;
+	}
+}

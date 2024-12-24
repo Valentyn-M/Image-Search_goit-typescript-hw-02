@@ -1,0 +1,30 @@
+.gallery {
+	display: flex;
+	gap: 15px;
+	flex-direction: column;
+	width: 100%;
+}
+
+@media (min-width: 380px) {
+	.gallery {
+		flex-direction: row;
+		align-items: center;
+		flex-wrap: wrap;
+	}
+
+	.item {
+		width: calc((100% - (15px)) / 2);
+	}
+}
+
+@media (min-width: 768px) {
+	.item {
+		width: calc((100% - (15px * 2)) / 3);
+	}
+}
+
+@media (min-width: 1200px) {
+	.item {
+		width: calc((100% - (15px * 3)) / 4);
+	}
+}
