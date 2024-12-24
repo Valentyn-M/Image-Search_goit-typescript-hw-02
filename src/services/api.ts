@@ -12,6 +12,18 @@ interface Response {
 }
 
 export const fetchImages = async (topic: string, page: number): Promise<Response> => {
-	const response = await axios.get(`/?client_id=${API_KEY}&query=${topic}&page=${page}&per_page=28`);
+	const response = await axios.get<Response>(`/?client_id=${API_KEY}&query=${topic}&page=${page}&per_page=28`);
 	return response.data;
 }
+
+
+// ==========================================================================================================================
+
+// Унiверсальний варiант <T>
+
+/*
+export const fetchImages = async <T>(topic: string, page: number): Promise<T> => {
+	const response = await axios.get<T>(`/?client_id=${API_KEY}&query=${topic}&page=${page}&per_page=28`);
+	return response.data;
+};
+*/

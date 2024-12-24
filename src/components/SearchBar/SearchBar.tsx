@@ -19,13 +19,11 @@ const SearchBar: React.FC<SearchBarProps> = ({ changeQuery }) => {
 	}
 
 	const formRef = useRef<HTMLFormElement>(null);
-	// Стан для активації класу
+
 	const [isActive, setIsActive] = useState<boolean>(false);
 
 	const handleSubmit = (values: InitialValues): void => {
-		// Якщо текстове поле порожнє
 		if (values.query.trim() === "") {
-			// Бібліотека React Hot Toast
 			toast.error("You must enter text to search for images")
 			return;
 		}
@@ -33,7 +31,6 @@ const SearchBar: React.FC<SearchBarProps> = ({ changeQuery }) => {
 		changeQuery(values.query);
 	}
 
-	// Активацiя форми
 	const handleFocus = (): void => {
 		setIsActive(true);
 	};

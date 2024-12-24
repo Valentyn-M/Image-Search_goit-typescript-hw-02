@@ -9,8 +9,6 @@ const LoadMoreBtn: React.FC<LoadMoreBtnProps> = ({ changePage }) => {
 
 	const handleClick = (evt: MouseEvent<HTMLButtonElement>) => {
 		changePage();
-
-		// Remove focus from the button
 		evt.currentTarget.blur();
 	}
 
